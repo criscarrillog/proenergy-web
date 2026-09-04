@@ -7,8 +7,8 @@ import { Footer } from '@/components/layout/Footer';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'AVS Ingeniería - Soluciones integrales',
-  description: 'Ingeniería civil, eléctrica, mantenimiento industrial y energías renovables',
+  title: 'Proenergy - Soluciones integrales',
+  description: 'Soluciones de Ingeniería, Mantenimiento y Montaje Industrial',
 };
 
 export default function RootLayout({
