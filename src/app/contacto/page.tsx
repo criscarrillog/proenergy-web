@@ -6,15 +6,49 @@ export default function ContactoPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setIsSuccess(true);
-      setTimeout(() => setIsSuccess(false), 5000);
-    }, 1500);
+const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+  setIsSubmitting(true);
+  setIsSuccess(false);
+
+  const form = e.currentTarget;
+
+  const formData = {
+    nombre: (form.elements.namedItem('nombre') as HTMLInputElement).value,
+    email: (form.elements.namedItem('email') as HTMLInputElement).value,
+    telefono: (form.elements.namedItem('telefono') as HTMLInputElement).value,
+    mensaje: (form.elements.namedItem('mensaje') as HTMLTextAreaElement).value,
   };
+
+  try {
+    const response = await fetch('/api/contacto', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || data.message || 'Error al enviar el mensaje');
+    }
+
+    console.log('✅ Respuesta de la API:', data);
+    setIsSuccess(true);
+    form.reset();
+
+    setTimeout(() => setIsSuccess(false), 5000);
+
+  } catch (error) {
+    console.error('❌ Error enviando formulario:', error);
+    alert('No se pudo enviar el mensaje. Revise la consola para más información.');
+
+  } finally {
+    setIsSubmitting(false);
+  }
+};
 
   return (
     <div className="min-h-screen py-20 bg-gray-50">
@@ -45,6 +79,7 @@ export default function ContactoPage() {
                 </label>
                 <input
                   type="text"
+                  name="nombre"
                   required
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition"
                   placeholder="Ingrese su nombre"
@@ -57,6 +92,7 @@ export default function ContactoPage() {
                 </label>
                 <input
                   type="email"
+                  name="email"
                   required
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition"
                   placeholder="correo@empresa.com"
@@ -69,6 +105,7 @@ export default function ContactoPage() {
                 </label>
                 <input
                   type="tel"
+                  name="telefono"
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition"
                   placeholder="099 999 9999"
                 />
@@ -79,6 +116,7 @@ export default function ContactoPage() {
                   Mensaje *
                 </label>
                 <textarea
+                  name="mensaje"
                   rows={5}
                   required
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition"

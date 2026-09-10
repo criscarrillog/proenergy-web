@@ -28,8 +28,8 @@ export function Navbar() {
 
           <div className={`md:flex gap-8 items-center ${isOpen ? 'flex flex-col absolute top-20 left-0 w-full bg-white p-6 shadow-lg' : 'hidden'}`}>
             <Link href="/" className="hover:text-primary transition font-medium">Inicio</Link>
-            <Link href="#servicios" className="hover:text-primary transition font-medium">Servicios</Link>
-            <Link href="#nosotros" className="hover:text-primary transition font-medium">Nosotros</Link>
+            <Link href="/#servicios" className="hover:text-primary transition font-medium">Servicios</Link>
+            <Link href="/#nosotros" className="hover:text-primary transition font-medium">Nosotros</Link>
             <Link href="/contacto" className="bg-primary text-white px-6 py-2 rounded-full hover:bg-primary-dark transition font-medium">
               Contacto
             </Link>
