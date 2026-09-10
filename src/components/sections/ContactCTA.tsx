@@ -1,6 +1,6 @@
 'use client';
 
-// Actualizado: 20:27pm
+// Actualizado: 20:33pm
 import { useState } from 'react';
 //import emailjs from '@emailjs/browser';  
 
@@ -188,7 +188,7 @@ const sanitizarTexto = (texto: string): string => {
 } finally {
   setIsLoading(false);
 }
-
+};
   // ============================================
   // 🎨 RENDER
   // ============================================
